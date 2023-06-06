@@ -1,0 +1,22 @@
+{
+    "name": "spring",
+    "service": "api",
+    "workspaceFolder": "/workspace",
+    "dockerComposeFile": "../../docker-compose.yml",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "java.autobuild.enabled": true, // 自動ビルド
+                "java.debug.settings.hotCodeReplace": "auto", // デバッグセッション中に実行中のアプリケーションへのクラスの動的な再ロード
+                "files.autoSave": "afterDelay", // 変更後1秒（1000ミリ秒）後にファイルの自動保存
+                "files.autoSaveDelay": 1000
+            },
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vmware.vscode-spring-boot",
+                "vscjava.vscode-lombok",
+                "redhat.vscode-xml"
+            ]
+        }
+    }
+}
