@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,9 @@ import com.example.motocatalog.bean.Motorcycle;
 
 @Controller
 public class MotosController {
+
+    // ログ出力
+    private static final Logger log = LoggerFactory.getLogger(MotosController.class);
     
     @RequestMapping("/hello")
     public String hello(@RequestParam String name, Model model) {
@@ -52,6 +57,7 @@ public class MotosController {
         
         model.addAttribute("brands", brands);
         model.addAttribute("motos", motos);
+        log.info("motos: {}", motos);
 
         return "moto_list";
     }
