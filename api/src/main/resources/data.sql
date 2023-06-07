@@ -1,12 +1,3 @@
-/*
- * ** SQLの順次実行 **
- * ・DBeaverの場合
- * ALT + X キーを押下する
- * 
- * ・A5 SQL MK-2の場合
- * 実行位置を「先頭からすべて」に変更してから実行
- */
-
 -- m_brandへの挿入
 INSERT IGNORE INTO m_brand (brand_id, brand_name)
 VALUES 

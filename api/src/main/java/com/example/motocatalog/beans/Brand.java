@@ -1,4 +1,4 @@
-package com.example.motocatalog.bean;
+package com.example.motocatalog.beans;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

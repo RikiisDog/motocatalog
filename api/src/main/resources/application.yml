@@ -10,8 +10,15 @@ spring:
   devtools:
     livereload:
       enabled: true
+  sql:
+    init:
+      mode: never
 logging:
   level:
     root: INFO
   file:
     name: logs/app.log
+mybatis:
+  mapper-locations: classpath:/com/example/motocatalog/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
