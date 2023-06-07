@@ -3,14 +3,14 @@ version: '3.9'
 services:
   db:
     container_name: mysql
-    image: mysql:8.0.28
+    build:
+      context: ./db/
+      dockerfile: Dockerfile
     ports:
       - 13306:3306
     env_file:
       - ./db/db-access.env
     volumes:
-      - ./db/sql/init.sql:/docker-entrypoint-initdb.d/test_table.sql
-      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
       - db-data:/var/lib/mysql/
     restart: always
   api:
