@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.motocatalog.beans.Motorcycle;
 import com.example.motocatalog.beans.SearchCondition;
+import com.example.motocatalog.forms.SearchForm;
 
 @Mapper
 public interface MotorcycleMapper {
@@ -16,6 +17,8 @@ public interface MotorcycleMapper {
      * @param: 検索条件
      * @return: バイク情報リスト
      */
+    public List<Motorcycle> selectByCondition(SearchForm form);
+
     public List<Motorcycle> selectByCondition(SearchCondition condition);
 
     /**

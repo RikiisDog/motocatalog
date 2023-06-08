@@ -3,8 +3,6 @@ package com.example.motocatalog.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.motocatalog.beans.Brand;
 import com.example.motocatalog.beans.Motorcycle;
-import com.example.motocatalog.beans.SearchCondition;
+import com.example.motocatalog.forms.SearchForm;
 import com.example.motocatalog.services.MotosService;
 
 @Controller
 public class MotosController {
-
-    private static final Logger log = LoggerFactory.getLogger(MotosController.class);
 
     @Autowired
     MotosService service;
@@ -30,21 +26,45 @@ public class MotosController {
     }
 
     @GetMapping("/motos")
-    public String motos(Model model) {
+    public String motos(SearchForm searchForm, Model model) {
 
-        // ブランド
-        List<Brand> brands = new ArrayList<>();
-        brands = service.getBrands();
-
-        // バイク
+        // バイクメーカードロップダウン取得
+        this.setBrands(model);
+        // バイク情報取得
         List<Motorcycle> motos = new ArrayList<>();
-        SearchCondition condition = new SearchCondition();
-        motos = service.getMotos(condition);
-
-        model.addAttribute("brands", brands);
+        motos = service.getMotos(searchForm);
+        // Modelに詰める
         model.addAttribute("motos", motos);
-        log.info("motos: {}", motos);
 
         return "moto_list";
+    }
+
+    /**
+     * キーワード初期化
+     * 
+     * @param searchForm
+     * @return 遷移先
+     */
+    @GetMapping("motos/reset")
+    public String resetKeyword(SearchForm searchForm, Model model) {
+
+        // バイクメーカードロップダウン取得
+        this.setBrands(model);
+        // 検索フォーム初期化
+        searchForm = new SearchForm();
+
+        return "moto_list";
+    }
+
+    /**
+     * バイクメーカードロップダウン取得
+     * 
+     * @param model
+     */
+    private void setBrands(Model model) {
+
+        List<Brand> brands = new ArrayList<>();
+        brands = service.getBrands();
+        model.addAttribute("brands", brands);
     }
 }

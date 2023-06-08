@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.motocatalog.beans.Brand;
 import com.example.motocatalog.beans.Motorcycle;
 import com.example.motocatalog.beans.SearchCondition;
+import com.example.motocatalog.forms.SearchForm;
 import com.example.motocatalog.mappers.BrandMapper;
 import com.example.motocatalog.mappers.MotorcycleMapper;
 
@@ -19,6 +20,10 @@ public class MotosService {
 
     @Autowired
     BrandMapper brandMapper;
+
+    public List<Motorcycle> getMotos(SearchForm form) {
+        return motorcycleMapper.selectByCondition(form);
+    }
 
     public List<Motorcycle> getMotos(SearchCondition condition) {
         return motorcycleMapper.selectByCondition(condition);
