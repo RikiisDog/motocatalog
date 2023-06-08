@@ -12,7 +12,7 @@ spring:
       enabled: true
   sql:
     init:
-      mode: never
+      mode: never # alwaysにすると起動時に毎回schema.sqlとdata.sqlを実行する
 logging:
   level:
     root: INFO

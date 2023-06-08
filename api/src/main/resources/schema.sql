@@ -1,3 +1,7 @@
+-- テーブルの削除
+DROP TABLE m_motorcycle;
+DROP TABLE m_brand;
+
 -- ブランドマスタの作成
 CREATE TABLE IF NOT EXISTS m_brand (
 	brand_id VARCHAR(2) NOT NULL PRIMARY KEY COMMENT 'ブランドID',

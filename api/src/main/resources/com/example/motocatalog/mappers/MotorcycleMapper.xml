@@ -9,7 +9,7 @@
       <result property="brandName" column="brand_name"/>
     </association>
   </resultMap>
-  <select id="selectAll" resultMap="motorcycleMap">
+  <select id="selectByCondition" resultMap="motorcycleMap">
     SELECT
       mm.moto_no,
       mb.brand_id, 
@@ -29,7 +29,59 @@
       m_brand AS mb 
     ON
       mm.brand_id = mb.brand_id
+    <where>
+      <if test="brandId != null">
+        AND mm.brand_id = #{brandId}
+      </if>
+      <if test="keyword != null">
+        <bind name="likeKeyword" value="'%' + keyword + '%'"/>
+        AND mm.moto_name LIKE #{likeKeyword}
+      </if>
+    </where>
+    ORDER BY 
+      mm.moto_no
+  </select>
+
+  <select id="selectByPK" resultMap="motorcycleMap">
+    SELECT
+      mm.moto_no,
+      mb.brand_id, 
+      mb.brand_name,
+      mm.moto_name,
+      mm.seat_height,
+      mm.cylinder,
+      mm.cooling,
+      mm.price,
+      mm.comment,
+      mm.version,
+      mm.ins_dt,
+      mm.upd_dt 
+    FROM 
+      m_motorcycle AS mm
+    INNER JOIN
+      m_brand AS mb 
+    ON
+      mm.brand_id = mb.brand_id
+    WHERE
+      mm.moto_no = #{motoNo}
     ORDER BY 
       mm.moto_no
     </select>
+
+    <update id="updateByMoto">
+      UPDATE
+	      m_motorcycle
+      SET
+        moto_name = #{motoName},
+        seat_height = #{seatHeight},
+        cylinder = #{cylinder},
+        cooling = #{cooling},
+        price = #{price},
+        comment = #{comment},
+        brand_id = #{brand.brandId},
+        version = #{version} + 1,
+        upd_dt = CURRENT_TIMESTAMP
+      WHERE
+        moto_no = #{motoNo}
+    </update>
 </mapper>
