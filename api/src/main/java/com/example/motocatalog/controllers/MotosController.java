@@ -1,5 +1,6 @@
 package com.example.motocatalog.controllers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class MotosController {
         motos = service.getMotos(searchForm);
         // Modelに詰める
         model.addAttribute("motos", motos);
+        model.addAttribute("datetime", LocalDateTime.now());
 
         return "moto_list";
     }
