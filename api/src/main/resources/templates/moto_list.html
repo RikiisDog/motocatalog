@@ -21,7 +21,6 @@
                     th:text="#{header-title}"></a></span>
         </div>
     </nav>
-    </div>
     <div class="container">
         <form th:action="@{/motos}" method="GET">
             <div class="row">
@@ -58,12 +57,12 @@
                 <table class="table table-striped mt-3">
                     <thead>
                         <tr>
-                            <th scope="col" th:text="#{table-no}">No.</th>
-                            <th scope="col" th:text="#{table-brand}">メーカー</th>
-                            <th scope="col" th:text="#{table-car-name}">車名</th>
-                            <th scope="col" th:text="#{table-engine}">エンジン</th>
-                            <th scope="col" th:text="#{table-price}">価格</th>
-                            <th scope="col" th:text="#{table-comment}">コメント</th>
+                            <th scope="col" th:text="#{table-no}" class="text-center"></th>
+                            <th scope="col" th:text="#{table-brand}" class="text-center"></th>
+                            <th scope="col" th:text="#{table-car-name}" class="text-center"></th>
+                            <th scope="col" th:text="#{table-engine}" class="text-center"></th>
+                            <th scope="col" th:text="#{table-price}" class="text-center"></th>
+                            <th scope="col" th:text="#{table-comment}" class="text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +71,7 @@
                             <td th:text="*{brand.brandName}"></td>
                             <td th:text="*{motoName}"></td>
                             <td th:text="*{cooling} + *{cylinder}"></td>
-                            <td th:text="*{price}"></td>
+                            <td class="text-end" th:text="*{#numbers.formatInteger(price,3,'COMMA')}"></td>
                             <td th:text="*{comment}"></td>
                         </tr>
                     </tbody>
