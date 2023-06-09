@@ -10,14 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>MotoList</title>
+    <title th:text="#{site-title}"></title>
 </head>
 
 <body>
     <!-- As a heading -->
     <nav class="navbar navbar-dark bg-dark mb-3">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">バイク管理</span>
+            <span class="navbar-brand mb-0 h1"><a th:href="@{/motos}" style="color: white; text-decoration: none;"
+                    th:text="#{header-title}"></a></span>
+        </div>
     </nav>
     </div>
     <div class="container">
@@ -25,28 +27,29 @@
             <div class="row">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="brand" class="form-label">バイクメーカー</label>
+                        <label for="brand" class="form-label" th:text="#{dropdown-title}"></label>
                         <select class="form-select" th:field="${searchForm.brandId}" id="brand"
                             aria-label="Default select example">
                             <option value=""></option>
-                            <option th:each="brand: ${brands}" th:text="${brand.brandName}" th:value="${brand.brandId}">
-                                Honda</option>
+                            <option th:each="brand: ${brands}" th:text="#{brand.brandName}" th:value="${brand.brandId}">
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3">
-                        <label for="keyword" class="form-label">キーワード</label>
+                        <label for="keyword" class="form-label" th:text="#{keyword-form}"></label>
                         <input type="text" class="form-control" th:field="${searchForm.keyword}" id="keyword"
                             placeholder="Keyword">
+                        <div class="text-danger" th:errors="${searchForm.keyword}"></div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col d-flex flex-row-reverse">
-                    <button type="button" class="btn btn-primary">新規</button>
-                    <a th:href="@{/motos/reset}" class="btn btn-danger ms-2 me-2">リセット</a>
-                    <button type="submit" class="btn btn-success">検索</button>
+                    <button type="button" class="btn btn-primary" th:text="#{new-button}"></button>
+                    <a th:href="@{/motos/reset}" class="btn btn-danger ms-2 me-2" th:text="#{reset-button}"></a>
+                    <button type="submit" class="btn btn-success" th:text="#{search-button}"></button>
                 </div>
             </div>
         </form>
@@ -55,12 +58,12 @@
                 <table class="table table-striped mt-3">
                     <thead>
                         <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">メーカー</th>
-                            <th scope="col">車名</th>
-                            <th scope="col">エンジン</th>
-                            <th scope="col">価格</th>
-                            <th scope="col">コメント</th>
+                            <th scope="col" th:text="#{table-no}">No.</th>
+                            <th scope="col" th:text="#{table-brand}">メーカー</th>
+                            <th scope="col" th:text="#{table-car-name}">車名</th>
+                            <th scope="col" th:text="#{table-engine}">エンジン</th>
+                            <th scope="col" th:text="#{table-price}">価格</th>
+                            <th scope="col" th:text="#{table-comment}">コメント</th>
                         </tr>
                     </thead>
                     <tbody>
