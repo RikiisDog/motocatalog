@@ -23,25 +23,21 @@
     </nav>
     <div class="container">
         <form th:action="@{/motos}" method="GET">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="brand" class="form-label" th:text="#{dropdown-title}"></label>
-                        <select class="form-select" th:field="${searchForm.brandId}" id="brand"
-                            aria-label="Default select example">
-                            <option value=""></option>
-                            <option th:each="brand: ${brands}" th:text="#{brand.brandName}" th:value="${brand.brandId}">
-                            </option>
-                        </select>
-                    </div>
+                    <label for="brand" class="form-label" th:text="#{dropdown-title}"></label>
+                    <select class="form-select" th:field="${searchForm.brandId}" id="brand"
+                        aria-label="Default select example">
+                        <option value=""></option>
+                        <option th:each="brand: ${brands}" th:text="${brand.brandName}" th:value="${brand.brandId}">
+                        </option>
+                    </select>
                 </div>
                 <div class="col">
-                    <div class="mb-3">
-                        <label for="keyword" class="form-label" th:text="#{keyword-form}"></label>
-                        <input type="text" class="form-control" th:field="${searchForm.keyword}" id="keyword"
-                            placeholder="Keyword">
-                        <div class="text-danger" th:errors="${searchForm.keyword}"></div>
-                    </div>
+                    <label for="keyword" class="form-label" th:text="#{keyword-form}"></label>
+                    <input type="text" class="form-control" th:field="${searchForm.keyword}" id="keyword"
+                        placeholder="Keyword">
+                    <div class="text-danger" th:errors="${searchForm.keyword}"></div>
                 </div>
             </div>
             <div class="row">
@@ -69,7 +65,7 @@
                         <tr th:each="moto: ${motos}" th:object="${moto}">
                             <th scope="row" th:text="*{motoNo}"></th>
                             <td th:text="*{brand.brandName}"></td>
-                            <td th:text="*{motoName}"></td>
+                            <td><a th:href="@{/motos/} + *{motoNo}" th:text="*{motoName}"></a></td>
                             <td th:text="*{cooling} + *{cylinder}"></td>
                             <td class="text-end" th:text="*{#numbers.formatInteger(price,3,'COMMA')}"></td>
                             <td th:text="*{comment}"></td>
