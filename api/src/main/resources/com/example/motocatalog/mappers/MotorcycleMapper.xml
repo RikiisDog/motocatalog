@@ -83,5 +83,7 @@
         upd_dt = CURRENT_TIMESTAMP
       WHERE
         moto_no = #{motoNo}
+        AND
+        version = #{version}
     </update>
 </mapper>
