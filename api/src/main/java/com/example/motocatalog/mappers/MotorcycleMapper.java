@@ -22,7 +22,7 @@ public interface MotorcycleMapper {
     public List<Motorcycle> selectByCondition(SearchCondition condition);
 
     /**
-     * バイク情報を検索条件で検索する
+     * バイク情報をバイク番号で検索する
      * 
      * @param: バイク番号
      * @return: バイク情報
@@ -36,4 +36,20 @@ public interface MotorcycleMapper {
      * @return: 更新件数
      */
     public int updateByMoto(Motorcycle moto);
+
+    /**
+     * バイク情報を新規登録する
+     * 
+     * @param moto
+     * @return バイク情報
+     */
+    public int insert(Motorcycle moto);
+
+    /**
+     * バイク情報を削除する
+     * 
+     * @param motoNo
+     * @return 削除件数
+     */
+    public int deleteByPK(int motoNo);
 }
