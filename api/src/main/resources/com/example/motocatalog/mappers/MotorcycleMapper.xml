@@ -86,4 +86,36 @@
         AND
         version = #{version}
     </update>
+
+    <!-- <select id="selectNewMoto" resultType="int">
+      SELECT
+        MAX(m_motorcycle.moto_no) + 1
+      FROM
+        m_motorcycle
+      FOR UPDATE
+    </select> -->
+
+    <insert id="insert" parameterType="com.example.motocatalog.beans.Motorcycle">
+      INSERT INTO
+        m_motorcycle (
+          moto_name,
+          seat_height,
+          cylinder,
+          cooling,
+          price,
+          comment,
+          brand_id,
+          version
+        )
+      VALUES (
+        #{motoName},
+        #{seatHeight},
+        #{cylinder},
+        #{cooling},
+        #{price},
+        #{comment},
+        #{brand.brandId},
+        1
+      )
+    </insert>
 </mapper>

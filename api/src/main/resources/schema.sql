@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS m_brand (
 -- モーターサイクルマスタの作成
 CREATE TABLE IF NOT EXISTS m_motorcycle (
 	moto_no INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'バイク番号',
-	moto_name VARCHAR(100) COMMENT 'バイク名',
+	moto_name VARCHAR(100) UNIQUE COMMENT 'バイク名',
 	seat_height INT UNSIGNED COMMENT 'シート高',
 	cylinder INT UNSIGNED COMMENT 'シリンダー',
 	cooling VARCHAR(20) COMMENT '冷却',

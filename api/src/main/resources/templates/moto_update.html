@@ -22,7 +22,7 @@
         </div>
     </nav>
     <div class="container">
-        <form method="POST" th:object="${updateForm}" th:action="@{/motos/save}">
+        <form method="POST" th:object="${updateForm}" th:action="@{/motos/update}">
             <input type="hidden" th:field="*{motoNo}">
             <input type="hidden" th:field="*{version}">
             <div class="row">

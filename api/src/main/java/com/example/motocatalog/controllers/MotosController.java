@@ -20,9 +20,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.motocatalog.beans.Brand;
 import com.example.motocatalog.beans.Motorcycle;
+import com.example.motocatalog.forms.RegisterForm;
 import com.example.motocatalog.forms.SearchForm;
 import com.example.motocatalog.forms.UpdateForm;
 import com.example.motocatalog.services.MotosService;
+import com.example.motocatalog.services.exceptions.MotorcycleAlreadyExistsException;
+import com.example.motocatalog.services.exceptions.MotorcycleDuplicateUpdateException;
+import com.example.motocatalog.services.exceptions.MotorcycleRegistrationFailedException;
 
 @Controller
 public class MotosController {
@@ -105,10 +109,12 @@ public class MotosController {
     /**
      * 更新ボタン押下後の処理
      * 
+     * @param updateForm    入力内容
+     * @param redirectAttrs リダイレクト先
      * @return 遷移先
      */
-    @PostMapping("/motos/save")
-    public String save(@ModelAttribute UpdateForm updateForm, RedirectAttributes redirectAttrs) {
+    @PostMapping("/motos/update")
+    public String update(@ModelAttribute UpdateForm updateForm, RedirectAttributes redirectAttrs) {
 
         // 入力内容をインスタンスへ詰め替える
         Motorcycle moto = new Motorcycle();
@@ -116,13 +122,57 @@ public class MotosController {
 
         try {
             // DBに保存する
-            service.save(moto);
+            service.update(moto);
             return "redirect:/motos";
 
-        } catch (OptimisticLockingFailureException e) {
+        } catch (OptimisticLockingFailureException | MotorcycleDuplicateUpdateException | MotorcycleAlreadyExistsException e) {
             // エラーメッセージをフラッシュスコープに保存
             redirectAttrs.addFlashAttribute("error", e.getMessage());
             return "redirect:/motos/" + updateForm.getMotoNo();
+        }
+    }
+
+    /**
+     * 登録画面の初期表示
+     * 
+     * @param motoNo     バイク番号
+     * @param updateForm バイク情報
+     * @param model      モデル
+     * @return 遷移先
+     */
+    @GetMapping("motos/register")
+    public String initRegister(@ModelAttribute("registerForm") RegisterForm registerForm, Model model) {
+
+        // バイクメーカードロップダウン取得
+        this.setBrands(model);
+
+        return "moto_register";
+    }
+
+    /**
+     * 登録ボタン押下後の処理
+     * 
+     * @param registerForm  入力内容
+     * @param redirectAttrs リダイレクト先
+     * @return 遷移先
+     */
+    @PostMapping("motos/register/success")
+    public String register(@ModelAttribute RegisterForm registerForm, RedirectAttributes redirectAttrs) {
+
+        // 入力内容をインスタンスへ詰め替える
+        Motorcycle moto = new Motorcycle();
+        BeanUtils.copyProperties(registerForm, moto);
+
+        try {
+            // DBに保存する
+            service.register(moto);
+            return "redirect:/motos";
+
+        } catch (MotorcycleRegistrationFailedException | MotorcycleAlreadyExistsException e) {
+            // エラーメッセージをフラッシュスコープに保存
+            redirectAttrs.addFlashAttribute("error", e.getMessage());
+            redirectAttrs.addFlashAttribute("registerForm", registerForm);
+            return "redirect:/motos/register";
         }
     }
 

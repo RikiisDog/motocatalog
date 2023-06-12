@@ -151,7 +151,7 @@ public class MotosServiceTest {
         // バイク情報更新処理
         before.setMotoName("ChangeName");
         // バイク情報保存処理
-        service.save(before);
+        service.update(before);
         // 変更後のバイク情報取得
         Motorcycle after = service.getMotos(1);
         // テスト実行
