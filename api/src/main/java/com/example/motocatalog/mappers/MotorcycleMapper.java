@@ -37,18 +37,19 @@ public interface MotorcycleMapper {
      */
     public int updateByMoto(Motorcycle moto);
 
-    // /**
-    //  * 新しいバイク番号を採番する
-    //  * 
-    //  * @return バイク番号
-    //  */
-    // public int selectNewMoto();
-
     /**
-     * 新しいバイクを登録する
+     * バイク情報を新規登録する
      * 
      * @param moto
      * @return バイク情報
      */
     public int insert(Motorcycle moto);
+
+    /**
+     * バイク情報を削除する
+     * 
+     * @param motoNo
+     * @return 削除件数
+     */
+    public int deleteByPK(int motoNo);
 }

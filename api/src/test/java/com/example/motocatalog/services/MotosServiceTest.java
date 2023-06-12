@@ -1,6 +1,7 @@
 package com.example.motocatalog.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -14,10 +15,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.motocatalog.beans.Brand;
 import com.example.motocatalog.beans.Motorcycle;
 import com.example.motocatalog.beans.SearchCondition;
+import com.example.motocatalog.services.exceptions.MotorcycleDeleteFailedException;
 
 @SpringBootTest
 public class MotosServiceTest {
@@ -137,8 +141,8 @@ public class MotosServiceTest {
         assertEquals(moto.getPrice(), 550000);
         assertEquals(moto.getBrand().getBrandId(), "01");
         assertEquals(moto.getVersion(), 1);
-        assertEquals(moto.getInsDt(), LocalDateTime.parse("2023-06-08 10:08:55", formatter)); // ここの値はDBからCopyしてくる
-        assertEquals(moto.getUpdDt(), LocalDateTime.parse("2023-06-08 10:08:55", formatter)); // ここの値はDBからCopyしてくる
+        assertEquals(moto.getInsDt(), LocalDateTime.parse("2023-01-01 12:00:00", formatter)); // ここの値はDBからCopyしてくる
+        assertEquals(moto.getUpdDt(), LocalDateTime.parse("2023-01-01 12:00:00", formatter)); // ここの値はDBからCopyしてくる
     }
 
     @Test
@@ -159,4 +163,52 @@ public class MotosServiceTest {
         assertEquals(after.getVersion(), (before.getVersion() + 1));
     }
 
+    @Test
+    @DisplayName("バイク情報登録")
+    @Sql({ "/schema.sql", "/data.sql" })
+    @Transactional
+    @Rollback
+    void testInsertByMoto012() {
+        // 変更前のバイク情報取得
+        Motorcycle before = new Motorcycle();
+        // バイク情報更新処理
+        before.setMotoName("登録テスト");
+        before.setSeatHeight(10);
+        before.setCylinder(1);
+        before.setCooling("水冷");
+        before.setPrice(1000);
+        before.setComment("登録テストコメント");
+        before.setBrand(new Brand("01", "Honda"));
+        // バイク情報登録処理
+        service.register(before);
+        // 変更後のバイク情報取得
+        Motorcycle after = service.getMotos(11);
+        // テスト実行
+        assertEquals(after.getMotoNo(), 11);
+        assertEquals(after.getMotoName(), "登録テスト");
+        assertEquals(after.getSeatHeight(), 10);
+        assertEquals(after.getCylinder(), 1);
+        assertEquals(after.getCooling(), "水冷");
+        assertEquals(after.getPrice(), 1000);
+        assertEquals(after.getComment(), "登録テストコメント");
+        assertEquals(after.getBrand().getBrandId(), "01");
+        assertEquals(after.getVersion(), 1);
+    }
+
+    @Test
+    @DisplayName("バイク情報削除")
+    @Sql({ "/schema.sql", "/data.sql" })
+    @Transactional
+    @Rollback
+    void testDeleteByMoto013() {
+        // 変更前のバイク情報取得
+        Motorcycle before = service.getMotos(1);
+        // 削除処理
+        service.delete(before.getMotoNo());
+        // 再度同じバイク情報を削除しようとすると例外がスローされることを確認
+        assertThrows(MotorcycleDeleteFailedException.class, () -> {
+            service.delete(before.getMotoNo());
+        });
+
+    }
 }

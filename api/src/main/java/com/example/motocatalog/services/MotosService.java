@@ -17,6 +17,7 @@ import com.example.motocatalog.forms.SearchForm;
 import com.example.motocatalog.mappers.BrandMapper;
 import com.example.motocatalog.mappers.MotorcycleMapper;
 import com.example.motocatalog.services.exceptions.MotorcycleAlreadyExistsException;
+import com.example.motocatalog.services.exceptions.MotorcycleDeleteFailedException;
 import com.example.motocatalog.services.exceptions.MotorcycleDuplicateUpdateException;
 import com.example.motocatalog.services.exceptions.MotorcycleRegistrationFailedException;
 
@@ -106,5 +107,23 @@ public class MotosService {
                     messageSource.getMessage(
                             "error.MotorcycleAlreadyExistsException", null, Locale.JAPANESE));
         }
+    }
+
+    /**
+     * バイク情報削除処理(例外があった倍ロークバックさせる)
+     * 
+     * @param motoNo バイク番号
+     * @return 削除件数
+     */
+    @Transactional
+    public int delete(int motoNo) {
+        int deleteCount = motorcycleMapper.deleteByPK(motoNo);
+        // 削除できなかった場合例外をスローする
+        if (deleteCount == 0) {
+            throw new MotorcycleDeleteFailedException(
+                    messageSource.getMessage(
+                            "error.MotorcycleDeleteFailedException", null, Locale.JAPANESE));
+        }
+        return deleteCount;
     }
 }

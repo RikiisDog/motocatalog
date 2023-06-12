@@ -118,4 +118,11 @@
         1
       )
     </insert>
+
+    <delete id="deleteByPK">
+      DELETE FROM
+        m_motorcycle
+      WHERE
+        moto_no = #{motoNo}
+    </delete>
 </mapper>

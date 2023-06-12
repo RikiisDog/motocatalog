@@ -25,6 +25,7 @@ import com.example.motocatalog.forms.SearchForm;
 import com.example.motocatalog.forms.UpdateForm;
 import com.example.motocatalog.services.MotosService;
 import com.example.motocatalog.services.exceptions.MotorcycleAlreadyExistsException;
+import com.example.motocatalog.services.exceptions.MotorcycleDeleteFailedException;
 import com.example.motocatalog.services.exceptions.MotorcycleDuplicateUpdateException;
 import com.example.motocatalog.services.exceptions.MotorcycleRegistrationFailedException;
 
@@ -125,10 +126,37 @@ public class MotosController {
             service.update(moto);
             return "redirect:/motos";
 
-        } catch (OptimisticLockingFailureException | MotorcycleDuplicateUpdateException | MotorcycleAlreadyExistsException e) {
+        } catch (OptimisticLockingFailureException | MotorcycleDuplicateUpdateException
+                | MotorcycleAlreadyExistsException e) {
             // エラーメッセージをフラッシュスコープに保存
             redirectAttrs.addFlashAttribute("error", e.getMessage());
             return "redirect:/motos/" + updateForm.getMotoNo();
+        }
+    }
+
+    /**
+     * 削除ボタン押下後の処理
+     * 
+     * @param updateForm    入力内容
+     * @param redirectAttrs リダイレクト先
+     * @return 遷移先
+     */
+    @PostMapping("/motos/delete")
+    public String delete(@ModelAttribute UpdateForm updateForm, RedirectAttributes redirectAttrs) {
+
+        // 入力内容をインスタンスへ詰め替える
+        Motorcycle moto = new Motorcycle();
+        BeanUtils.copyProperties(updateForm, moto);
+
+        try {
+            // DBに保存する
+            service.delete(moto.getMotoNo());
+            return "redirect:/motos";
+
+        } catch (MotorcycleDeleteFailedException e) {
+            // エラーメッセージをフラッシュスコープに保存
+            redirectAttrs.addFlashAttribute("error", e.getMessage());
+            return "redirect:/motos/";
         }
     }
 
