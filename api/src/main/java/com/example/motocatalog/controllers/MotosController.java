@@ -115,7 +115,20 @@ public class MotosController {
      * @return 遷移先
      */
     @PostMapping("/motos/update")
-    public String update(@ModelAttribute UpdateForm updateForm, RedirectAttributes redirectAttrs) {
+    public String update(@Validated UpdateForm updateForm, BindingResult result,
+            RedirectAttributes redirectAttrs, Model model) {
+
+        // バリデーションエラー発生時
+        if (result.hasErrors()) {
+            // バイクメーカードロップダウン取得
+            this.setBrands(model);
+            // バイク情報を取得
+            Motorcycle moto = service.getMotos(updateForm.getMotoNo());
+            // 検索結果を入力内容に詰め替える
+            BeanUtils.copyProperties(moto, updateForm);
+
+            return "moto_update";
+        }
 
         // 入力内容をインスタンスへ詰め替える
         Motorcycle moto = new Motorcycle();
@@ -185,7 +198,14 @@ public class MotosController {
      * @return 遷移先
      */
     @PostMapping("motos/register/success")
-    public String register(@ModelAttribute RegisterForm registerForm, RedirectAttributes redirectAttrs) {
+    public String register(@Validated @ModelAttribute RegisterForm registerForm, BindingResult result,
+            RedirectAttributes redirectAttrs, Model model) {
+
+        if (result.hasErrors()) {
+            // バイクメーカードロップダウン取得
+            this.setBrands(model);
+            return "moto_register";
+        }
 
         // 入力内容をインスタンスへ詰め替える
         Motorcycle moto = new Motorcycle();

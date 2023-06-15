@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Motorcycle {
 
-    private int motoNo;
+    private Integer motoNo;
     private String motoName;
-    private int seatHeight;
-    private int cylinder;
+    private Integer seatHeight;
+    private Integer cylinder;
     private String cooling;
-    private int price;
+    private Integer price;
     private String comment;
     private Brand brand;
-    private int version;
+    private Integer version;
     private LocalDateTime insDt;
     private LocalDateTime updDt;
 

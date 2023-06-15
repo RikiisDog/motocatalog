@@ -39,41 +39,58 @@
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="brand" class="form-label" th:text=#{table-brand}></label>
+                    <label for="brand" class="form-label" th:text=#{table-brand}></label><span
+                        class="badge rounded-pill bg-danger">必須</span>
                     <select th:field="*{brand.brandId}" class="form-select" id="brand"
-                        aria-label="Default select example">
+                        aria-label="Default select example" th:errorClass="is-invalid">
                         <option value=""></option>
                         <option th:each="brand: ${brands}" th:text="${brand.brandName}" th:value="${brand.brandId}">
                         </option>
                     </select>
+                    <div th:errors="*{brand.brandId}" class="invalid-feedback"></div>
                 </div>
                 <div class="col">
-                    <label for="motoName" class="form-label" th:text=#{table-car-name}></label>
-                    <input type="text" th:field="*{motoName}" class="form-control" id="motoName" placeholder="">
+                    <label for="motoName" class="form-label" th:text=#{table-car-name}></label><span
+                        class="badge rounded-pill bg-danger">必須</span>
+                    <input type="text" th:field="*{motoName}" class="form-control" id="motoName" placeholder=""
+                        th:errorClass="is-invalid" maxlength="50">
+                    <div th:errors="*{motoName}" class="invalid-feedback">
+                    </div>
                 </div>
                 <div class="col">
                     <label for="seatHeight" class="form-label" th:text="#{table-seat}"></label>
-                    <input type="text" th:field="*{seatHeight}" class="form-control" id="seatHeight" placeholder="">
+                    <input type="number" th:field="*{seatHeight}" class="form-control" id="seatHeight" placeholder=""
+                        th:errorClass="is-invalid">
+                    <div th:errors="*{seatHeight}" class="invalid-feedback">
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label for="cylinder" class="form-label" th:text="#{table-cylinder}"></label>
-                    <input type="text" th:field="*{cylinder}" class="form-control" id="cylinder" placeholder="">
+                    <input type="number" th:field="*{cylinder}" class="form-control" id="cylinder" placeholder=""
+                        th:errorClass="is-invalid">
+                    <div th:errors="*{cylinder}" class="invalid-feedback"></div>
                 </div>
                 <div class="col">
                     <label for="cooling" class="form-label" th:text="#{table-cooling}"></label>
-                    <input type="text" th:field="*{cooling}" class="form-control" id="cooling" placeholder="">
+                    <input type="text" th:field="*{cooling}" class="form-control" id="cooling" placeholder=""
+                        th:errorClass="is-invalid" maxlength="50">
+                    <div th:errors="*{cooling}" class="invalid-feedback"></div>
                 </div>
                 <div class="col">
                     <label for="price" class="form-label" th:text="#{table-price}"></label>
-                    <input type="text" th:field="*{price}" class="form-control" id="price" placeholder="">
+                    <input type="number" th:field="*{price}" class="form-control" id="price" placeholder=""
+                        th:errorClass="is-invalid">
+                    <div th:errors="*{price}" class="invalid-feedback"></div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label for="comment" class="form-label" th:text="#{table-comment}"></label>
-                    <textarea class="form-control" th:field="*{comment}" id="comment" rows="3"></textarea>
+                    <textarea class="form-control" th:field="*{comment}" id="comment" rows="3"
+                        th:errorClass="is-invalid" maxlength="200"></textarea>
+                    <div th:errors="*{comment}" class="invalid-feedback"></div>
                 </div>
             </div>
             <div class="row mb-3">
