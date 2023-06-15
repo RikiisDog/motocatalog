@@ -72,7 +72,7 @@
                             <th scope="row" th:text="${stat.count}"></th>
                             <td th:text="*{brand.brandName}"></td>
                             <td><a th:href="@{/motos/} + *{motoNo}" th:text="*{motoName}"></a></td>
-                            <td th:text="*{cooling} + *{cylinder}"></td>
+                            <td><span th:text="*{cooling}"></span><span th:text="*{cylinder}"></span></td>
                             <td class="text-end" th:text="*{#numbers.formatInteger(price,3,'COMMA')}"></td>
                             <td th:text="*{comment}"></td>
                         </tr>

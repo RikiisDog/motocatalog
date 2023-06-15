@@ -8,7 +8,7 @@ import lombok.Data;
 public class SearchForm {
 
     private String brandId;
-    
-    @Size(min = 2, max = 10)
+
+    @Size(min = 2, max = 10, message = "{searchForm.keyword.Size}")
     private String keyword;
 }
