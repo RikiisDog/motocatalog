@@ -1,11 +1,13 @@
 -- テーブルの削除
 DROP TABLE m_motorcycle;
 DROP TABLE m_brand;
+DROP TABLE m_user;
 
 -- ブランドマスタの作成
 CREATE TABLE IF NOT EXISTS m_brand (
 	brand_id VARCHAR(2) NOT NULL PRIMARY KEY COMMENT 'ブランドID',
 	brand_name VARCHAR(20) COMMENT 'ブランド名'
+	PRIMARY KEY (brand_id)
 ) COMMENT 'ブランドマスタ';
 
 -- モーターサイクルマスタの作成
@@ -24,3 +26,12 @@ CREATE TABLE IF NOT EXISTS m_motorcycle (
 	PRIMARY KEY (moto_no),
 	FOREIGN KEY (brand_id) REFERENCES m_brand(brand_id)
 ) COMMENT 'モーターサイクルマスタ';
+
+-- ユーザーマスタの作成
+CREATE TABLE IF NOT EXISTS m_user (
+	username VARCHAR(20) NOT NULL COMMENT 'ユーザ名',
+	password VARCHAR(100) NOT NULL COMMENT 'パスワード',
+	ins_dt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '登録日時',
+	upd_dt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+	PRIMARY KEY (username)
+) COMMENT 'ユーザーマスタ';

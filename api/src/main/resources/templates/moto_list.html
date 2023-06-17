@@ -19,6 +19,9 @@
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1"><a th:href="@{/motos}" style="color: white; text-decoration: none;"
                     th:text="#{header-title}"></a></span>
+            <form th:action="@{/logout}" method="POST">
+                <button class="btn-sm btn-primary">ログアウト</button>
+            </form>
         </div>
     </nav>
     <div class="container">
