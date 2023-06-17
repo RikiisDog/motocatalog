@@ -41,3 +41,12 @@ VALUES
 ('Z900RS CAFE', 820, 4, '水冷', 1290000, '見た目は渋いが後部シートは小さい', '02', 1),
 ('V7 III Racer 10th ANNIVERSARY', 770, 2, '水冷', 1375000, '珍しい見た目', '05', 1),
 ('Hayabusa', 800, 4, '水冷', 2156000, '猛スピード', '04', 1);
+
+-- ユーザーマスタへの挿入
+INSERT INTO m_user (
+    username,
+    password
+)
+VALUES
+('test', '$2a$10$b6UKMeAVCceIMPozO8Nrm.mkLGNxzy1Xf6OnhpJXm9kVwRGtCL2mS'),
+('admin', '$2a$10$jZF/bl2bCoY7JZYB.vWXTeIOyleJL76d7ZbuK1USJiVR8ieJq.OBO');
